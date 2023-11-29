@@ -75,7 +75,7 @@ img {
     </head>
 
     
-    <div class="carrousel" x-data="{isopen: 0}">
+    <div class="carrousel" x-data="{ isopen: 0, slide_total: 5}">
     <button @click="changer_de_slide (isopen - 1)" class="carrousel_btn carrousel_btn-avant" aria-label="slide précedant"><</button>
     <button @click="changer_de_slide (isopen + 1)" class="carrousel_btn carrousel_btn-apres" aria-label="slide suivant">></button>
     <div class="carrousel_parent-ecrans">
@@ -122,11 +122,12 @@ img {
 <script>
     const carrouselApp = {
         isopen: 0,
+        
         changer_de_slide(index) {
-            const Slide_Total = 5;
+            const slide_total = 5;
             if (index < 0) {
-                this.isopen = slide_Total - 1;
-            } else if (index >= slide_Total) {
+                this.isopen = slide_total - 1;
+            } else if (index >= slide_total) {
                 this.isopen = 0;
             } else {
                 this.isopen = index;
@@ -134,12 +135,13 @@ img {
             
             const ecran = document.getElementById(`ecran-${this.isopen + 1}`);
             ecran.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'start' });
+
         }
     };
 
     document.addEventListener('DOMContentLoaded', () => {
-        carrouselApp.slide_Total = 5;
+        carrouselApp.slide_total = slide_total;
     });
 
-   x-data Alpine.data('carrouselApp', () => carrouselApp);
+   Alpine.data('carrouselApp', () => carrouselApp);
 </script>
