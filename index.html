@@ -75,8 +75,9 @@ img {
     </head>
 
     
-    <div class="carrousel" x-data="{isopen: 0,}">
-    <button @click="isopen = 1" class="carrousel_btn carrousel_btn-avant" aria-label="slide précedant"><</button><button class="carrousel_btn carrousel_btn-apres" aria-label="slide suivant">></button>
+    <div class="carrousel" x-data="{isopen: 0}">
+    <button @click="changer_de_slide (isopen - 1)" class="carrousel_btn carrousel_btn-avant" aria-label="slide précedant"><</button>
+    <button @click="changer_de_slide (isopen + 1)" class="carrousel_btn carrousel_btn-apres" aria-label="slide suivant">></button>
     <div class="carrousel_parent-ecrans">
         <div id="ecran-1" class="carrousel_ecran" x-ref="parent">
             <figure>
@@ -117,3 +118,28 @@ img {
         <li><a href="#ecran-5" class="caroussel_lien">ecran 5</a></li>
     </ul>
 </div>
+
+<script>
+    const carrouselApp = {
+        isopen: 0,
+        changer_de_slide(index) {
+            const Slide_Total = 5;
+            if (index < 0) {
+                this.isopen = slide_Total - 1;
+            } else if (index >= slide_Total) {
+                this.isopen = 0;
+            } else {
+                this.isopen = index;
+            }
+            
+            const ecran = document.getElementById(`ecran-${this.isopen + 1}`);
+            ecran.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'start' });
+        }
+    };
+
+    document.addEventListener('DOMContentLoaded', () => {
+        carrouselApp.slide_Total = 5;
+    });
+
+   x-data Alpine.data('carrouselApp', () => carrouselApp);
+</script>
